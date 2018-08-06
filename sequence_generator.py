@@ -190,7 +190,7 @@ class SequenceGenerator(object):
 
 if __name__ == "__main__":
 
-    shapes = ["square", "sawtooth", "square"]
+    shapes = ["square", "sawtooth", "sinusoidal"]
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
