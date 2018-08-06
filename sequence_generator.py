@@ -186,51 +186,53 @@ class SequenceGenerator(object):
             plt.grid(True)
             plt.legend()
             plt.savefig("./plots/"+subset_name+"_"+self.seq_shape+"_sample"+str(i).zfill(3)+".pdf")
-            #plt.show()
+            plt.close("all")
 
 if __name__ == "__main__":
 
-    shape = "square" #sawtooth, square
-    data = SequenceGenerator(sequence_shape=shape)
-    # Cadence
-    time_sample_noise = 0.3
-    max_length = 50
-    min_length = 20
-    time_span = [10, 50]
-    min_time_spam = 10
+    shapes = ["square", "sawtooth", "square"]
+    for shape in shapes:
 
-    data.set_cadence_params(time_sample_noise=time_sample_noise,
-                            max_length=max_length,
-                            min_length=min_length,
-                            time_span=time_span,
-                            min_time_spam=min_time_spam)
+        data = SequenceGenerator(sequence_shape=shape)
+        # Cadence
+        time_sample_noise = 0.3
+        max_length = 50
+        min_length = 20
+        time_span = [10, 50]
+        min_time_spam = 10
 
-    # Signal
-    amp_range = [2, 5]
-    freq_range = [0.3, 0.001]
+        data.set_cadence_params(time_sample_noise=time_sample_noise,
+                                max_length=max_length,
+                                min_length=min_length,
+                                time_span=time_span,
+                                min_time_spam=min_time_spam)
 
-    data.set_signal_params(amp_range=amp_range,
-                           freq_range=freq_range)
+        # Signal
+        amp_range = [2, 5]
+        freq_range = [0.3, 0.001]
 
-    # Noise
-    heteroskedastic = True
-    noise_distr = "gaussian"
-    mean_noise = [0.3, 1.7]
-    dev_mean = 0.01
+        data.set_signal_params(amp_range=amp_range,
+                               freq_range=freq_range)
 
-    data.set_noise_params(heteroskedastic=heteroskedastic,
-                          noise_distr=noise_distr,
-                          noise_range=mean_noise,
-                          dev_noise_range=dev_mean)
+        # Noise
+        heteroskedastic = True
+        noise_distr = "gaussian"
+        mean_noise = [0.3, 1.7]
+        dev_mean = 0.01
 
-    n_examples = 10000
-    set_prop = 0.8, 0.1, 0.1
+        data.set_noise_params(heteroskedastic=heteroskedastic,
+                              noise_distr=noise_distr,
+                              noise_range=mean_noise,
+                              dev_noise_range=dev_mean)
 
-    data.generate_dataset(set_prop=set_prop,
-                          n_sequences=n_examples,
-                          data_name=shape)
+        n_examples = 10000
+        set_prop = 0.8, 0.1, 0.1
 
-    data.plot_n_examples()
+        data.generate_dataset(set_prop=set_prop,
+                              n_sequences=n_examples,
+                              data_name=shape)
+
+        data.plot_n_examples()
 
 
     """Scipy Waveforms
