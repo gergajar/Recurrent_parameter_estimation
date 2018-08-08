@@ -145,9 +145,9 @@ class LSTMLayer(object):
 
         with tf.variable_scope(self.layer_name, reuse=tf.AUTO_REUSE):
             if activation == "tanh":
-                act_func = tf.nn.tanh()
+                act_func = tf.nn.tanh
             elif activation == "relu":
-                act_func = tf.nn.relu()
+                act_func = tf.nn.relu
             else:
                 act_func = None
             self.lstm = tf.contrib.rnn.BasicLSTMCell(num_units=hidden_units,

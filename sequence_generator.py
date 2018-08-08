@@ -235,7 +235,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 50000
+        n_examples = 10000
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
