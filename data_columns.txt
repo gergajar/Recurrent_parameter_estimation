@@ -1,6 +1,85 @@
 
 Time_series:
 [('TIME', '>f8'), ('TIMECORR', '>f4'), ('CADENCENO', '>i4'), ('SAP_FLUX', '>f4'), ('SAP_FLUX_ERR', '>f4'), ('SAP_BKG', '>f4'), ('SAP_BKG_ERR', '>f4'), ('PDCSAP_FLUX', '>f4'), ('PDCSAP_FLUX_ERR', '>f4'), ('SAP_QUALITY', '>i4'), ('PSF_CENTR1', '>f8'), ('PSF_CENTR1_ERR', '>f4'), ('PSF_CENTR2', '>f8'), ('PSF_CENTR2_ERR', '>f4'), ('MOM_CENTR1', '>f8'), ('MOM_CENTR1_ERR', '>f4'), ('MOM_CENTR2', '>f8'), ('MOM_CENTR2_ERR', '>f4'), ('POS_CORR1', '>f4'), ('POS_CORR2', '>f4')]
+Description:
+TTYPE1  = 'TIME    '           / column title: data time stamps                 
+TFORM1  = 'D       '           / column format: 64-bit floating point           
+TUNIT1  = 'BJD - 2454833'      / column units: barycenter corrected JD          
+TDISP1  = 'D14.7   '           / column display format                          
+TTYPE2  = 'TIMECORR'           / column title: barycenter - timeslice correction
+TFORM2  = 'E       '           / column format: 32-bit floating point           
+TUNIT2  = 'd       '           / column units: day                              
+TDISP2  = 'E13.6   '           / column display format                          
+TTYPE3  = 'CADENCENO'          / column title: unique cadence number            
+TFORM3  = 'J       '           / column format: signed 32-bit integer           
+TDISP3  = 'I10     '           / column display format                          
+TTYPE4  = 'SAP_FLUX'           / column title: aperture photometry flux         
+TFORM4  = 'E       '           / column format: 32-bit floating point           
+TUNIT4  = 'e-/s    '           / column units: electrons per second             
+TDISP4  = 'E14.7   '           / column display format                          
+TTYPE5  = 'SAP_FLUX_ERR'       / column title: aperture phot. flux error        
+TFORM5  = 'E       '           / column format: 32-bit floating point           
+TUNIT5  = 'e-/s    '           / column units: electrons per second (1-sigma)   
+TDISP5  = 'E14.7   '           / column display format                          
+TTYPE6  = 'SAP_BKG '           / column title: aperture phot. background flux   
+TFORM6  = 'E       '           / column format: 32-bit floating point           
+TUNIT6  = 'e-/s    '           / column units: electrons per second             
+TDISP6  = 'E14.7   '           / column display format                          
+TTYPE7  = 'SAP_BKG_ERR'        / column title: ap. phot. background flux error  
+TFORM7  = 'E       '           / column format: 32-bit floating point           
+TUNIT7  = 'e-/s    '           / column units: electrons per second (1-sigma)   
+TDISP7  = 'E14.7   '           / column display format                          
+TTYPE8  = 'PDCSAP_FLUX'        / column title: aperture phot. PDC flux          
+TFORM8  = 'E       '           / column format: 32-bit floating point           
+TUNIT8  = 'e-/s    '           / column units: electrons per second             
+TDISP8  = 'E14.7   '           / column display format                          
+TTYPE9  = 'PDCSAP_FLUX_ERR'    / column title: ap. phot. PDC flux error         
+TFORM9  = 'E       '           / column format: 32-bit floating point           
+TUNIT9  = 'e-/s    '           / column units: electrons per second (1-sigma)   
+TDISP9  = 'E14.7   '           / column display format                          
+TTYPE10 = 'SAP_QUALITY'        / column title: aperture photometry quality flag 
+TFORM10 = 'J       '           / column format: signed 32-bit integer           
+TDISP10 = 'B16.16  '           / column display format                          
+TTYPE11 = 'PSF_CENTR1'         / column title: PSF-fitted column centroid       
+TFORM11 = 'D       '           / column format: 64-bit floating point           
+TUNIT11 = 'pixel   '           / column units: pixel                            
+TDISP11 = 'F10.5   '           / column display format                          
+TTYPE12 = 'PSF_CENTR1_ERR'     / column title: PSF-fitted column error          
+TFORM12 = 'E       '           / column format: 32-bit floating point           
+TUNIT12 = 'pixel   '           / column units: pixel (1-sigma)                  
+TDISP12 = 'E14.7   '           / column display format                          
+TTYPE13 = 'PSF_CENTR2'         / column title: PSF-fitted row centroid          
+TFORM13 = 'D       '           / column format: 64-bit floating point           
+TUNIT13 = 'pixel   '           / column units: pixel                            
+TDISP13 = 'F10.5   '           / column display format                          
+TTYPE14 = 'PSF_CENTR2_ERR'     / column title: PSF-fitted row error             
+TFORM14 = 'E       '           / column format: 32-bit floating point           
+TUNIT14 = 'pixel   '           / column units: pixel (1-sigma)                  
+TDISP14 = 'E14.7   '           / column display format                          
+TTYPE15 = 'MOM_CENTR1'         / column title: moment-derived column centroid   
+TFORM15 = 'D       '           / column format: 64-bit floating point           
+TUNIT15 = 'pixel   '           / column units: pixel                            
+TDISP15 = 'F10.5   '           / column display format                          
+TTYPE16 = 'MOM_CENTR1_ERR'     / column title: moment-derived column error      
+TFORM16 = 'E       '           / column format: 32-bit floating point           
+TUNIT16 = 'pixel   '           / column units: pixel (1-sigma)                  
+TDISP16 = 'E14.7   '           / column display format                          
+TTYPE17 = 'MOM_CENTR2'         / column title: moment-derived row centroid      
+TFORM17 = 'D       '           / column format: 64-bit floating point           
+TUNIT17 = 'pixel   '           / column units: pixel                            
+TDISP17 = 'F10.5   '           / column display format                          
+TTYPE18 = 'MOM_CENTR2_ERR'     / column title: moment-derived row error         
+TFORM18 = 'E       '           / column format: 32-bit floating point           
+TUNIT18 = 'pixel   '           / column units: pixel (1-sigma)                  
+TDISP18 = 'E14.7   '           / column display format                          
+TTYPE19 = 'POS_CORR1'          / column title: column position correction       
+TFORM19 = 'E       '           / column format: 32-bit floating point           
+TUNIT19 = 'pixels  '           / column units: pixel                            
+TDISP19 = 'E14.7   '           / column display format                          
+TTYPE20 = 'POS_CORR2'          / column title: row position correction          
+TFORM20 = 'E       '           / column format: 32-bit floating point           
+TUNIT20 = 'pixels  '           / column units: pixel                            
+TDISP20 = 'E14.7   '           / column display format                         
 
 Stellar Parameters:
 ['KICID', 'Teff', 'Teff_err', 'logg', 'logg_err', 'Fe/H', 'Fe/H_err', 'M_noCorrection', 'M_noCorrection_err', 'R_noCorrection', 'R_noCorrection_err', 'M_RGB', 'M_RGB_err', 'R_RGB', 'R_RGB_err', 'M_Clump', 'M_Clump_err', 'R_Clump', 'R_Clump_err', 'EvoPhase']
