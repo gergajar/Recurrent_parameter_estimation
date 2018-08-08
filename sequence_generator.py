@@ -100,6 +100,7 @@ class SequenceGenerator(object):
         noise_list = []
         real_values_list = []
         dense_time_list = []
+        sequence_length_list = []
         for i in range(n_sequences):
             samples_within_sequence = np.random.uniform(low=self.min_length,
                                                         high=self.max_length+1)
@@ -112,6 +113,7 @@ class SequenceGenerator(object):
             kwargs = {"amp": amp, "freq": freq, "phase": phase}
 
             time = np.linspace(start=self.time_span[0], stop=last_sample_time, num=samples_within_sequence)
+            sequence_length_list.append(len(time))
             time += np.random.normal(loc=0, scale=self.time_sample_noise, size=time.size)
             dense_time = np.arange(start=self.time_span[0], stop=last_sample_time, step=0.1)
             underlying_model, _ = self.gen_samples(time=dense_time, seq_shape=self.seq_shape, kwargs=kwargs)
@@ -140,7 +142,10 @@ class SequenceGenerator(object):
             time_list.append(time)
             params_list.append(params)
 
-        return sequence_list, real_values_list, time_list, params_list, noise_list, dense_time_list
+        params_list = np.stack(params_list)
+        sequence_length_list = np.stack(sequence_length_list)
+
+        return sequence_list, real_values_list, time_list, params_list, noise_list, dense_time_list, sequence_length_list
 
     def generate_dataset(self, **kwargs):
 
@@ -155,13 +160,15 @@ class SequenceGenerator(object):
             datasets[name] = {}
             datasets[name]["n_sequences"] = np.round(self.set_prop[set_i]*self.n_sequences).astype(np.int)
             print(name, "n_sequences: ", datasets[name]["n_sequences"])
-            sequences, real_values, times, params, noise, dense_time = self.generate_sequences(datasets[name]["n_sequences"])
+            sequences, real_values, times, params, noise, dense_time, lengths = self.generate_sequences(datasets[name]["n_sequences"])
             datasets[name]["sequences"] = sequences
             datasets[name]["real_values"] = real_values
             datasets[name]["time"] = times
             datasets[name]["params"] = params
             datasets[name]["noise"] = noise
             datasets[name]["dense_time"] = dense_time
+            datasets[name]["lengths"] = lengths
+            datasets[name]["max_length"] = self.max_length
 
         pickle.dump(datasets,
                     open(self.data_path + self.data_name + ".pkl", "wb"),
@@ -225,7 +232,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 10000
+        n_examples = 50000
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
