@@ -115,6 +115,7 @@ class SequenceGenerator(object):
             time = np.linspace(start=self.time_span[0], stop=last_sample_time, num=samples_within_sequence)
             sequence_length_list.append(len(time))
             time += np.random.normal(loc=0, scale=self.time_sample_noise, size=time.size)
+            time = np.sort(time)
             dense_time = np.arange(start=self.time_span[0], stop=last_sample_time, step=0.1)
             underlying_model, _ = self.gen_samples(time=dense_time, seq_shape=self.seq_shape, kwargs=kwargs)
             samples, params = self.gen_samples(time=time, seq_shape=self.seq_shape, kwargs=kwargs)
@@ -195,6 +196,7 @@ class SequenceGenerator(object):
             plt.savefig("./plots/"+subset_name+"_"+self.seq_shape+"_sample"+str(i).zfill(3)+".pdf")
             plt.close("all")
 
+
 if __name__ == "__main__":
 
     shapes = ["square", "sawtooth", "sinusoidal"]
@@ -202,7 +204,7 @@ if __name__ == "__main__":
 
         data = SequenceGenerator(sequence_shape=shape)
         # Cadence
-        time_sample_noise = 0.3
+        time_sample_noise = 0.7
         max_length = 50
         min_length = 20
         time_span = [10, 50]
@@ -232,7 +234,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 50000
+        n_examples = 10000
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,

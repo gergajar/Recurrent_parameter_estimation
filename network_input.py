@@ -33,7 +33,8 @@ class SequenceDataset(object):
             shaped_input = []
             first = 0
             last = input_length
-            while last < input_length:
+            data_array_len = len(data_array)
+            while last < data_array_len:
                 shaped_input.append(data_array[first:last][np.newaxis, ...])
                 first += 1
                 last += 1
@@ -63,10 +64,13 @@ class SequenceDataset(object):
                     for key in keys_to_convert:
                         converted, seq_l = build_input_shape(self.data[subset][key][i], self.n_inputs, max_length)
                         batch_dict[key].append(converted)
-                    batch_dict["params"].append(self.data[subset][key][i])
+                    batch_dict["params"].append(self.data[subset]["params"][i])
                     batch_dict["lengths"].append(seq_l)
                     batch_dict["index"].append(i)
                 for key in batch_dict.keys():
+                    if key == "params":
+                        batch_dict[key] = np.stack(batch_dict[key])
+                        continue
                     batch_dict[key] = np.array(batch_dict[key])
                 batch_list.append(batch_dict)
                 if end == n_sequences:
@@ -105,3 +109,9 @@ if __name__ == "__main__":
     n_iter = 10
     for i in range(n_iter):
         batch = dataset.next_batch("training")
+        if i == 0:
+            print(batch.keys())
+            for key in batch.keys():
+                print(key, batch[key].shape)
+                print(batch[key][i, ...])
+                
