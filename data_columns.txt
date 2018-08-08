@@ -1,0 +1,6 @@
+
+Time_series:
+[('TIME', '>f8'), ('TIMECORR', '>f4'), ('CADENCENO', '>i4'), ('SAP_FLUX', '>f4'), ('SAP_FLUX_ERR', '>f4'), ('SAP_BKG', '>f4'), ('SAP_BKG_ERR', '>f4'), ('PDCSAP_FLUX', '>f4'), ('PDCSAP_FLUX_ERR', '>f4'), ('SAP_QUALITY', '>i4'), ('PSF_CENTR1', '>f8'), ('PSF_CENTR1_ERR', '>f4'), ('PSF_CENTR2', '>f8'), ('PSF_CENTR2_ERR', '>f4'), ('MOM_CENTR1', '>f8'), ('MOM_CENTR1_ERR', '>f4'), ('MOM_CENTR2', '>f8'), ('MOM_CENTR2_ERR', '>f4'), ('POS_CORR1', '>f4'), ('POS_CORR2', '>f4')]
+
+Stellar Parameters:
+['KICID', 'Teff', 'Teff_err', 'logg', 'logg_err', 'Fe/H', 'Fe/H_err', 'M_noCorrection', 'M_noCorrection_err', 'R_noCorrection', 'R_noCorrection_err', 'M_RGB', 'M_RGB_err', 'R_RGB', 'R_RGB_err', 'M_Clump', 'M_Clump_err', 'R_Clump', 'R_Clump_err', 'EvoPhase']
