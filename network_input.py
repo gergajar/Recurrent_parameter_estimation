@@ -64,7 +64,7 @@ class SequenceDataset(object):
                     for key in keys_to_convert:
                         converted, seq_l = build_input_shape(self.data[subset][key][i], self.n_inputs, max_length)
                         batch_dict[key].append(converted)
-                    batch_dict["params"].append(self.data[subset]["params"][i])
+                    batch_dict["params"].append(self.data[subset]["params"][i][:-1])
                     batch_dict["lengths"].append(seq_l)
                     batch_dict["index"].append(i)
                 for key in batch_dict.keys():
@@ -96,7 +96,7 @@ class SequenceDataset(object):
 
 if __name__ == "__main__":
 
-    data_path = "./data/sinusoidal.pkl"
+    data_path = "./data/sinusoidal_gaussian.pkl"
     input_data_path = "./data/network_input.pkl"
     n_inputs = 1
     rebuild_data = True
@@ -114,4 +114,5 @@ if __name__ == "__main__":
             for key in batch.keys():
                 print(key, batch[key].shape)
                 print(batch[key][i, ...])
-                
+        print("lengths:",batch["lengths"][:5])
+        print("index:", batch["index"][:5])

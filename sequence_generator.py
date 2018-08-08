@@ -131,7 +131,7 @@ class SequenceGenerator(object):
                     samples += np.random.normal(scale=noise_within_sequence)
                 elif self.noise_distr == "poisson":
                     noise_list.append(np.sqrt(np.abs(samples)))
-                    samples += np.random.poisson(lam=samples)
+                    samples += np.multiply(np.random.poisson(lam=np.abs(samples)), np.sign(samples))
 
             else:
                 noise_within_sequence = np.random.uniform(low=self.noise_range[0],
@@ -172,13 +172,13 @@ class SequenceGenerator(object):
             datasets[name]["max_length"] = self.max_length
 
         pickle.dump(datasets,
-                    open(self.data_path + self.data_name + ".pkl", "wb"),
+                    open(self.data_path + self.data_name + "_" + self.noise_distr + ".pkl", "wb"),
                     protocol=2)
 
     def plot_n_examples(self, subset_name="training", n_examples=10, data_path=None):
 
         if not data_path:
-            data_path = self.data_path + self.data_name + ".pkl"
+            data_path = self.data_path + self.data_name + "_" + self.noise_distr + ".pkl"
 
         data = np.load(data_path)
         subset = data[subset_name]
@@ -193,7 +193,8 @@ class SequenceGenerator(object):
             plt.title(title)
             plt.grid(True)
             plt.legend()
-            plt.savefig("./plots/"+subset_name+"_"+self.seq_shape+"_sample"+str(i).zfill(3)+".pdf")
+            plt.savefig("./plots/"+subset_name+"_"+self.seq_shape+
+                        "_"+self.noise_distr+"_sample"+str(i).zfill(3)+".png")
             plt.close("all")
 
 
@@ -218,7 +219,7 @@ if __name__ == "__main__":
 
         # Signal
         amp_range = [2, 5]
-        freq_range = [0.3, 0.001]
+        freq_range = [0.3, 0.05]
 
         data.set_signal_params(amp_range=amp_range,
                                freq_range=freq_range)
@@ -234,7 +235,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 10000
+        n_examples = 50000
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
