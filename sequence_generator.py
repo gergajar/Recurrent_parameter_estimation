@@ -4,6 +4,7 @@ import pickle
 import matplotlib.pyplot as plt
 
 np.random.seed(0)
+
 class SequenceGenerator(object):
 
     def __init__(self, **kwargs):
@@ -48,8 +49,10 @@ class SequenceGenerator(object):
             self.amp_range = kwargs["amp_range"]
         elif self.seq_shape in ["sinusoidal", "square", "sawtooth"]:
             self.freq_range = kwargs["freq_range"]
+            self.freqs = kwargs["freqs"]
             self.amp_range = kwargs["amp_range"]
         elif self.seq_shape == "gaussian_pulses":
+            self.freqs = kwargs["freqs"]
             self.freq_range = kwargs["freq_range"]
             self.amp_range = kwargs["amp_range"]
             self.pulse_width_range = kwargs["pulse_width_range"]
@@ -107,8 +110,14 @@ class SequenceGenerator(object):
             last_sample_time = np.random.uniform(low=self.time_span[0]+self.min_time_spam, high=self.time_span[1])
             amp = np.random.uniform(low=self.amp_range[0],
                                     high=self.amp_range[1])
-            freq = np.random.uniform(low=self.freq_range[0],
-                                     high=self.freq_range[1])
+            #d noise of giorgia
+            amp += np.random.normal(loc=0, scale=0.1)
+            if self.freq_range is not None:
+                freq = np.random.uniform(low=self.freq_range[0],
+                                         high=self.freq_range[1])
+            else:
+                freq = np.random.choice(self.freqs)
+
             phase = np.random.uniform(low=0, high=2*np.pi)
             kwargs = {"amp": amp, "freq": freq, "phase": phase}
 
@@ -116,7 +125,8 @@ class SequenceGenerator(object):
             sequence_length_list.append(len(time))
             time += np.random.normal(loc=0, scale=self.time_sample_noise, size=time.size)
             time = np.sort(time)
-            dense_time = np.arange(start=self.time_span[0], stop=last_sample_time, step=0.1)
+            dense_time = np.linspace(start=self.time_span[0], stop=last_sample_time, num=samples_within_sequence)
+            #np.arange(start=self.time_span[0], stop=last_sample_time, step=0.1)
             underlying_model, _ = self.gen_samples(time=dense_time, seq_shape=self.seq_shape, kwargs=kwargs)
             samples, params = self.gen_samples(time=time, seq_shape=self.seq_shape, kwargs=kwargs)
             real_values_list.append(underlying_model)
@@ -175,7 +185,7 @@ class SequenceGenerator(object):
                     open(self.data_path + self.data_name + "_" + self.noise_distr + ".pkl", "wb"),
                     protocol=2)
 
-    def plot_n_examples(self, subset_name="training", n_examples=10, data_path=None):
+    def plot_n_examples(self, subset_name="training", n_examples=3, data_path=None):
 
         if not data_path:
             data_path = self.data_path + self.data_name + "_" + self.noise_distr + ".pkl"
@@ -195,7 +205,8 @@ class SequenceGenerator(object):
             plt.legend()
             plt.savefig("./plots/"+subset_name+"_"+self.seq_shape+
                         "_"+self.noise_distr+"_sample"+str(i).zfill(3)+".png")
-            plt.close("all")
+            plt.show()
+            #plt.close("all")
 
 
 if __name__ == "__main__":
@@ -206,10 +217,10 @@ if __name__ == "__main__":
         data = SequenceGenerator(sequence_shape=shape)
         # Cadence
         time_sample_noise = 0.7
-        max_length = 50
-        min_length = 20
-        time_span = [10, 50]
-        min_time_spam = 10
+        max_length = 100#50
+        min_length = 100#20
+        time_span = [0,12]#[10, 50]
+        min_time_spam = 12#10
 
         data.set_cadence_params(time_sample_noise=time_sample_noise,
                                 max_length=max_length,
@@ -218,11 +229,15 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [2, 5]
-        freq_range = [0.3, 0.05]
+        amp_range = [1, 1]
+        #period_range = [np.pi/2, np.pi/2]
+        periods = np.linspace(start=np.pi/2, stop=2*np.pi, num=10)
+        #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
+        freqs = np.array(periods) / (2 * np.pi)
 
         data.set_signal_params(amp_range=amp_range,
-                               freq_range=freq_range)
+                               freqs = freqs,
+                               freq_range=None)
 
         # Noise
         heteroskedastic = True
@@ -235,7 +250,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 10000
+        n_examples = 37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
