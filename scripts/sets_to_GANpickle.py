@@ -15,7 +15,7 @@ def set_to_dicts_list(data, time_series_class, set):
     data = data[set]
     dicts_list = []
     for sequence_index in range(data['n_sequences']):
-        sequence_dict = {'original_magnitud': data['real_values'][sequence_index],
+        sequence_dict = {'original_magnitude': data['real_values'][sequence_index],
                          'original_time': data['dense_time'][sequence_index],
                          'frequency': data['params'][sequence_index][1],
                          'amplitude': data['params'][sequence_index][0],
@@ -43,5 +43,5 @@ for shape in shapes:
 pickle.dump(train_set, open(os.path.join(data_path, 'training.pkl'), "wb"), protocol=2)
 pickle.dump(val_set, open(os.path.join(data_path, 'validation.pkl'), "wb"), protocol=2)
 pickle.dump(test_set, open(os.path.join(data_path, 'test.pkl'), "wb"), protocol=2)
-pickle.dump([train_set, val_set, test_set], open(os.path.join(data_path, 'data_set.pkl'), "wb"), protocol=2)
+pickle.dump([train_set, val_set, test_set], open(os.path.join(data_path, 'data_set_dicts.pkl'), "wb"), protocol=2)
 
