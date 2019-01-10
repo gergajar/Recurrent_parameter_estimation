@@ -258,7 +258,7 @@ if __name__ == "__main__":
                               n_sequences=n_examples,
                               data_name=shape)
 
-        data.plot_n_examples()
+        #data.plot_n_examples()
 
 
     """Scipy Waveforms
