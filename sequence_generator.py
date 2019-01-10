@@ -111,14 +111,15 @@ class SequenceGenerator(object):
             amp = np.random.uniform(low=self.amp_range[0],
                                     high=self.amp_range[1])
             #d noise of giorgia
-            amp += np.random.normal(loc=0, scale=0.1)
+            #amp += np.random.normal(loc=0, scale=0.1)
             if self.freq_range is not None:
                 freq = np.random.uniform(low=self.freq_range[0],
                                          high=self.freq_range[1])
             else:
                 freq = np.random.choice(self.freqs)
-
-            phase = np.random.uniform(low=0, high=2*np.pi)
+            #No random phase
+            #phase = np.random.uniform(low=0, high=2*np.pi)
+            phase = 0
             kwargs = {"amp": amp, "freq": freq, "phase": phase}
 
             time = np.linspace(start=self.time_span[0], stop=last_sample_time, num=samples_within_sequence)
@@ -233,7 +234,7 @@ if __name__ == "__main__":
         #period_range = [np.pi/2, np.pi/2]
         periods = np.linspace(start=np.pi/2, stop=2*np.pi, num=10)
         #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
-        freqs = np.array(periods) / (2 * np.pi)
+        freqs = (2 * np.pi)/np.array(periods)
 
         data.set_signal_params(amp_range=amp_range,
                                freqs = freqs,
