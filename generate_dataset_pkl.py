@@ -53,8 +53,8 @@ if __name__ == "__main__":
         noise_distr = "gaussian"
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
-        amp_noise = 0.1
-        phase_noise = 0 #2*np.pi
+        amp_noise = 0.3
+        phase_noise = 2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
