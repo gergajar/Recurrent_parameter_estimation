@@ -193,7 +193,8 @@ class SequenceGenerator(object):
 
         data = np.load(data_path)
         subset = data[subset_name]
-        for i in range(n_examples):
+        idx = np.random.randint(0, subset['n_sequences'], size=3)
+        for i in idx:
             plt.plot(subset["dense_time"][i], subset["real_values"][i], label="underlying_model")
             plt.errorbar(subset["time"][i], subset["sequences"][i], yerr=subset["noise"][i], fmt="o", ms=5, label="samples")
             plt.xlabel("time")
@@ -220,8 +221,8 @@ if __name__ == "__main__":
         time_sample_noise = 0.7
         max_length = 100#50
         min_length = 100#20
-        time_span = [0,12]#[10, 50]
-        min_time_spam = 12#10
+        time_span = [0,6]#[10, 50]
+        min_time_spam = 6#10
 
         data.set_cadence_params(time_sample_noise=time_sample_noise,
                                 max_length=max_length,
@@ -232,7 +233,7 @@ if __name__ == "__main__":
         # Signal
         amp_range = [1, 1]
         #period_range = [np.pi/2, np.pi/2]
-        periods = np.linspace(start=np.pi/2, stop=2*np.pi, num=10)
+        periods = np.linspace(start=np.pi, stop=2*np.pi, num=10)
         #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
         freqs = (2 * np.pi)/np.array(periods)
 
