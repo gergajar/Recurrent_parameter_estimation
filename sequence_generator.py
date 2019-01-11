@@ -169,7 +169,7 @@ class SequenceGenerator(object):
         self.set_prop = np.array(kwargs["set_prop"])
         self.n_sequences = kwargs["n_sequences"]
         self.data_name = kwargs["data_name"]
-        self.data_path = os.path.join(PATH_TO_PROJECT, "data")
+        self.data_path = os.path.join(PATH_TO_PROJECT, "data") + "/"
 
         sets_names = ["training", "validation", "testing"]
         datasets = {}
