@@ -5,12 +5,20 @@ import numpy as np
 PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), ''))
 sys.path.append(PATH_TO_PROJECT)
-from sequence_generator import  SequenceGenerator
+from sequence_generator import SequenceGenerator
 import pickle
 from os import listdir
 from os.path import isfile, join
 
 if __name__ == "__main__":
+    #delete current pkls
+    data_path = os.path.join(PATH_TO_PROJECT, 'data')
+    filenames = [f for f in listdir(data_path) if isfile(join(data_path, f))]
+    pkl_filenames = [s for s in filenames if '.pkl' in s]
+    for pkl_file in pkl_filenames:
+        path_to_file = os.path.join(data_path, pkl_file)
+        if os.path.isfile(path_to_file):
+            os.remove(path_to_file)
 
     shapes = ["sinusoidal"]#["square", "sawtooth", "sinusoidal"]
     for shape in shapes:
@@ -46,12 +54,14 @@ if __name__ == "__main__":
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
         amp_noise = 0.1
+        phase_noise = 0 #2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean,
-                              amp_noise=amp_noise)
+                              amp_noise=amp_noise,
+                              phase_noise=phase_noise)
 
         n_examples = 100#37500
         set_prop = 0.8, 0.1, 0.1

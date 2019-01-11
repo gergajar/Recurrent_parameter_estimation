@@ -72,6 +72,7 @@ class SequenceGenerator(object):
         """
         self.noise_distr = kwargs["noise_distr"]
         self.amp_noise = kwargs["amp_noise"]
+        self.phase_noise = kwargs["phase_noise"]
         self.heteroskedastic = kwargs["heteroskedastic"]
         self.noise_range = kwargs["noise_range"]
         self.deviation_noise_range = kwargs["dev_noise_range"]
@@ -124,7 +125,7 @@ class SequenceGenerator(object):
             else:
                 freq = np.random.choice(self.freqs)
             #No random phase
-            phase = np.random.uniform(low=0, high=2*np.pi)
+            phase = np.random.uniform(low=0, high=self.phase_noise)
             #phase = 0
             kwargs = {"amp": amp, "freq": freq, "phase": phase}
 
@@ -253,12 +254,14 @@ if __name__ == "__main__":
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
         amp_noise = 0.1
+        phase_noise = 0 #2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean,
-                              amp_noise=amp_noise)
+                              amp_noise=amp_noise,
+                              phase_noise=phase_noise)
 
         n_examples = 100#37500
         set_prop = 0.8, 0.1, 0.1
