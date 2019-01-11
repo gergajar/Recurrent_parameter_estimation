@@ -118,7 +118,7 @@ class SequenceGenerator(object):
             amp = np.random.uniform(low=self.amp_range[0],
                                     high=self.amp_range[1])
             #d noise of giorgia
-            amp += np.random.normal(loc=0, scale=self.amp_noise)
+            amp -= np.abs(np.random.normal(loc=0, scale=self.amp_noise))
             if self.freq_range is not None:
                 freq = np.random.uniform(low=self.freq_range[0],
                                          high=self.freq_range[1])
