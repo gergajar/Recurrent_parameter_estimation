@@ -221,8 +221,8 @@ if __name__ == "__main__":
         time_sample_noise = 0.7
         max_length = 100#50
         min_length = 100#20
-        time_span = [0,6]#[10, 50]
-        min_time_spam = 6#10
+        time_span = [0,3]#[10, 50]
+        min_time_spam = 3#10
 
         data.set_cadence_params(time_sample_noise=time_sample_noise,
                                 max_length=max_length,
@@ -233,9 +233,9 @@ if __name__ == "__main__":
         # Signal
         amp_range = [1, 1]
         #period_range = [np.pi/2, np.pi/2]
-        periods = np.linspace(start=np.pi, stop=2*np.pi, num=10)
+        periods = np.linspace(start=3/4, stop=3, num=4)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4)
         #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
-        freqs = (2 * np.pi)/np.array(periods)
+        freqs = 1/np.array(periods)#(2 * np.pi)/np.array(periods)
 
         data.set_signal_params(amp_range=amp_range,
                                freqs = freqs,
@@ -260,13 +260,3 @@ if __name__ == "__main__":
                               data_name=shape)
 
         #data.plot_n_examples()
-
-
-    """Scipy Waveforms
-    chirp(t, f0, t1, f1[, method, phi, vertex_zero])	Frequency-swept cosine generator.
-    gausspulse(t[, fc, bw, bwr, tpr, retquad, …])	Return a Gaussian modulated sinusoid:
-    max_len_seq(nbits[, state, length, taps])	Maximum length sequence (MLS) generator.
-    sawtooth(t[, width])	Return a periodic sawtooth or triangle waveform.
-    square(t[, duty])	Return a periodic square-wave waveform.
-    sweep_poly(t, poly[, phi])	Frequency-swept cosine generator, with a time-dependent frequency.
-    unit_impulse(shape[, idx, dtype])	Unit impulse signal (discrete delta function) or unit basis vector."""
