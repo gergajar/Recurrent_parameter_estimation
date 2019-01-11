@@ -1,7 +1,12 @@
+import os
+import sys
 import numpy as np
 import scipy.signal as ss
 import pickle
 import matplotlib.pyplot as plt
+PATH_TO_PROJECT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), ''))
+sys.path.append(PATH_TO_PROJECT)
 
 np.random.seed(0)
 
@@ -164,7 +169,7 @@ class SequenceGenerator(object):
         self.set_prop = np.array(kwargs["set_prop"])
         self.n_sequences = kwargs["n_sequences"]
         self.data_name = kwargs["data_name"]
-        self.data_path = "./data/"
+        self.data_path = os.path.join(PATH_TO_PROJECT, "data")
 
         sets_names = ["training", "validation", "testing"]
         datasets = {}
