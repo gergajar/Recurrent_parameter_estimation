@@ -71,6 +71,7 @@ class SequenceGenerator(object):
         dev_noise_range: float, std from sampled mean noise
         """
         self.noise_distr = kwargs["noise_distr"]
+        self.amp_noise = kwargs["amp_noise"]
         self.heteroskedastic = kwargs["heteroskedastic"]
         self.noise_range = kwargs["noise_range"]
         self.deviation_noise_range = kwargs["dev_noise_range"]
@@ -116,7 +117,7 @@ class SequenceGenerator(object):
             amp = np.random.uniform(low=self.amp_range[0],
                                     high=self.amp_range[1])
             #d noise of giorgia
-            amp += np.random.normal(loc=0, scale=0.1)
+            amp += np.random.normal(loc=0, scale=self.amp_noise)
             if self.freq_range is not None:
                 freq = np.random.uniform(low=self.freq_range[0],
                                          high=self.freq_range[1])
@@ -251,11 +252,13 @@ if __name__ == "__main__":
         noise_distr = "gaussian"
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
+        amp_noise = 0.1
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
                               noise_range=mean_noise,
-                              dev_noise_range=dev_mean)
+                              dev_noise_range=dev_mean,
+                              amp_noise=amp_noise)
 
         n_examples = 100#37500
         set_prop = 0.8, 0.1, 0.1

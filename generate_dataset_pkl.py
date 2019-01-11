@@ -12,7 +12,7 @@ from os.path import isfile, join
 
 if __name__ == "__main__":
 
-    shapes = ["square", "sawtooth", "sinusoidal"]
+    shapes = ["sinusoidal"]#["square", "sawtooth", "sinusoidal"]
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
@@ -45,13 +45,15 @@ if __name__ == "__main__":
         noise_distr = "gaussian"
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
+        amp_noise = 0.1
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
                               noise_range=mean_noise,
-                              dev_noise_range=dev_mean)
+                              dev_noise_range=dev_mean,
+                              amp_noise=amp_noise)
 
-        n_examples = 37500
+        n_examples = 100#37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
