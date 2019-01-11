@@ -12,7 +12,7 @@ from os.path import isfile, join
 
 if __name__ == "__main__":
 
-    shapes = ["sawtooth", "sinusoidal"]
+    shapes = ["square", "sawtooth", "sinusoidal"]
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
@@ -78,7 +78,6 @@ if __name__ == "__main__":
 
 
     data_path = os.path.join(PATH_TO_PROJECT, 'data')
-    shapes = ["sawtooth", "sinusoidal"]
     train_set = []
     val_set = []
     test_set = []

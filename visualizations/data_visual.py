@@ -15,7 +15,9 @@ def plot_n_examples(data_path, subset_name="training", n_examples=3):
     subset = data[subset_name]
     idx = np.random.randint(0, subset['n_sequences'], size=n_examples)
     for i in idx:
-        plt.plot(subset["dense_time"][i], subset["real_values"][i], '-o', ms=5, label="underlying_model")
+        plt.plot(subset["dense_time"][i],
+                 #subset["real_values"][i], '-o', ms=5, label="underlying_model")
+                 subset["sequences"][i], '-o', ms=5, label="underlying_model")
         #plt.errorbar(subset["time"][i], subset["sequences"][i], yerr=subset["noise"][i], fmt="o", ms=5, label="samples")
         plt.xlabel("time")
         plt.ylabel("amplitude")
