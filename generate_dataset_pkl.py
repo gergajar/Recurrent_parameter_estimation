@@ -12,12 +12,12 @@ from os.path import isfile, join
 
 if __name__ == "__main__":
 
-    shapes = ["square", "sawtooth", "sinusoidal"]
+    shapes = ["sawtooth", "sinusoidal"]
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
         # Cadence
-        time_sample_noise = 0.7
+        time_sample_noise = 0.0
         max_length = 100#50
         min_length = 100#20
         time_span = [0,3]#[10, 50]
@@ -43,7 +43,7 @@ if __name__ == "__main__":
         # Noise
         heteroskedastic = True
         noise_distr = "gaussian"
-        mean_noise = [0.3, 1.7]
+        mean_noise = [0.01, 0.1]
         dev_mean = 0.01
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 37500
+        n_examples = 50000
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
@@ -67,6 +67,7 @@ if __name__ == "__main__":
         dicts_list = []
         for sequence_index in range(data['n_sequences']):
             sequence_dict = {'original_magnitude': data['real_values'][sequence_index],
+                             'generated_magnitude': data['sequences'][sequence_index],
                              'original_time': data['dense_time'][sequence_index],
                              'frequency': data['params'][sequence_index][1],
                              'amplitude': data['params'][sequence_index][0],
@@ -77,7 +78,7 @@ if __name__ == "__main__":
 
 
     data_path = os.path.join(PATH_TO_PROJECT, 'data')
-    shapes = ["square", "sawtooth", "sinusoidal"]
+    shapes = ["sawtooth", "sinusoidal"]
     train_set = []
     val_set = []
     test_set = []

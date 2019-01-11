@@ -116,15 +116,15 @@ class SequenceGenerator(object):
             amp = np.random.uniform(low=self.amp_range[0],
                                     high=self.amp_range[1])
             #d noise of giorgia
-            #amp += np.random.normal(loc=0, scale=0.1)
+            amp += np.random.normal(loc=0, scale=0.1)
             if self.freq_range is not None:
                 freq = np.random.uniform(low=self.freq_range[0],
                                          high=self.freq_range[1])
             else:
                 freq = np.random.choice(self.freqs)
             #No random phase
-            #phase = np.random.uniform(low=0, high=2*np.pi)
-            phase = 0
+            phase = np.random.uniform(low=0, high=2*np.pi)
+            #phase = 0
             kwargs = {"amp": amp, "freq": freq, "phase": phase}
 
             time = np.linspace(start=self.time_span[0], stop=last_sample_time, num=samples_within_sequence)
@@ -217,13 +217,13 @@ class SequenceGenerator(object):
 
 
 if __name__ == "__main__":
-
-    shapes = ["square", "sawtooth", "sinusoidal"]
+    #borrar cuadradas?
+    shapes = ["sawtooth", "sinusoidal"]#["square", "sawtooth", "sinusoidal"]
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
         # Cadence
-        time_sample_noise = 0.7
+        time_sample_noise = 0.0
         max_length = 100#50
         min_length = 100#20
         time_span = [0,3]#[10, 50]
@@ -249,7 +249,7 @@ if __name__ == "__main__":
         # Noise
         heteroskedastic = True
         noise_distr = "gaussian"
-        mean_noise = [0.3, 1.7]
+        mean_noise = [0.01, 0.1]
         dev_mean = 0.01
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
@@ -257,11 +257,11 @@ if __name__ == "__main__":
                               noise_range=mean_noise,
                               dev_noise_range=dev_mean)
 
-        n_examples = 37500
+        n_examples = 100#37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
                               n_sequences=n_examples,
                               data_name=shape)
 
-        #data.plot_n_examples()
+        data.plot_n_examples()
