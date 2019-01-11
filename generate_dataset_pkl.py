@@ -40,7 +40,7 @@ if __name__ == "__main__":
         # Signal
         amp_range = [1, 1]
         #period_range = [np.pi/2, np.pi/2]
-        periods = np.linspace(start=3/4, stop=3, num=4)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4)
+        periods = [3/2]#np.linspace(start=3/4, stop=3, num=4)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4)
         #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
         freqs = 1/np.array(periods)#(2 * np.pi)/np.array(periods)
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
                               amp_noise=amp_noise,
                               phase_noise=phase_noise)
 
-        n_examples = 40000#37500
+        n_examples = 100000#37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
