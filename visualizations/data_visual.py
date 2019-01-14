@@ -20,6 +20,7 @@ def plot_n_examples(data_path, subset_name="training", n_examples=3):
                  subset["sequences"][i], '-o', ms=5, label="underlying_model")
         #plt.errorbar(subset["time"][i], subset["sequences"][i], yerr=subset["noise"][i], fmt="o", ms=5, label="samples")
         plt.xlabel("time")
+        plt.ylim([-1,1])
         plt.ylabel("amplitude")
         title = "amp: " + "{0:.2f}".format(subset["params"][i][0]) \
                 + ", freq: " + "{0:.2f}".format(subset["params"][i][1]) \

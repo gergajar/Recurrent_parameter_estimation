@@ -156,7 +156,16 @@ class SequenceGenerator(object):
                                                           high=self.noise_range[1])
                 samples += np.random.normal(scale=noise_within_sequence, size=samples.size)
                 noise_list.append(noise_within_sequence)
-
+            #check values not above 1.0
+            if (samples>1.0).any():
+                print(samples[samples>1.0])
+                samples[samples > 1.0] = 1.0
+                print('A noisy generated samples is above 1.0, and generator'
+                                 +' only support values less than 1.0, Re-adjust'
+                                  +' your generation parameters to avoid this')
+                #raise ValueError('A noisy generated samples is above 1.0, and generator'
+                #                 +' only support values less than 1.0, Re-adjust'
+                #                  +' your generation parameters to avoid this')
             sequence_list.append(samples)
             time_list.append(time)
             params_list.append(params)
@@ -220,7 +229,7 @@ class SequenceGenerator(object):
 
 if __name__ == "__main__":
     #borrar cuadradas?
-    shapes = ["sawtooth", "sinusoidal"]#["square", "sawtooth", "sinusoidal"]
+    shapes = ["square", "sawtooth", "sinusoidal"]#["sawtooth", "sinusoidal"]#
     for shape in shapes:
 
         data = SequenceGenerator(sequence_shape=shape)
@@ -238,9 +247,9 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [1, 1]
+        amp_range = [0.7, 1]
         #period_range = [np.pi/2, np.pi/2]
-        periods = np.linspace(start=3/4, stop=3, num=4)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4)
+        periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4)
         #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
         freqs = 1/np.array(periods)#(2 * np.pi)/np.array(periods)
 
@@ -254,7 +263,7 @@ if __name__ == "__main__":
         mean_noise = [0.01, 0.1]
         dev_mean = 0.01
         amp_noise = 0.1
-        phase_noise = 0 #2*np.pi
+        phase_noise = 2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
