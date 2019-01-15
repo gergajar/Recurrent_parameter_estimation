@@ -38,15 +38,16 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [0.6, 0.8]
+        amp_range = [0.8, 0.8]
         #period_range = [np.pi/2, np.pi/2]
-        periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
-        #freq_range = np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
-        freqs = 1/np.array(periods)#(2 * np.pi)/np.array(periods)
+        #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
+        periods_range = [3/4, 3]
+        freq_range = 1/np.array(periods_range)[::-1]#np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
+        #freqs = 1/np.array(periods)#(2 * np.pi)/np.array(periods)
 
         data.set_signal_params(amp_range=amp_range,
-                               freqs = freqs,
-                               freq_range=None)
+                               freqs = None,#freqs,
+                               freq_range=freq_range)
 
         # Noise
         heteroskedastic = True
@@ -54,7 +55,7 @@ if __name__ == "__main__":
         mean_noise = [0.01, 0.2]
         dev_mean = 0.01
         amp_noise = 0.1
-        phase_noise = 2*np.pi
+        phase_noise = 0#2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,

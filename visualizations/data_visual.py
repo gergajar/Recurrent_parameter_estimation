@@ -16,8 +16,9 @@ def plot_n_examples(data_path, subset_name="training", n_examples=3):
     idx = np.random.randint(0, subset['n_sequences'], size=n_examples)
     for i in idx:
         plt.plot(subset["dense_time"][i],
-                 #subset["real_values"][i], '-o', ms=5, label="underlying_model")
-                 subset["sequences"][i], '-o', ms=5, label="underlying_model")
+                 subset["real_values"][i], '-o', ms=5, label="underlying_model")
+        plt.plot(subset["time"][i],
+                 subset["sequences"][i], '-o', ms=5, label="noisy_samples")
         #plt.errorbar(subset["time"][i], subset["sequences"][i], yerr=subset["noise"][i], fmt="o", ms=5, label="samples")
         plt.xlabel("time")
         plt.ylim([-1,1])
@@ -40,5 +41,5 @@ def plot_n_examples_all_classes(data_path, subset_name="training", n_examples=3)
         plot_n_examples(time_series_path, subset_name=subset_name, n_examples=n_examples)
 
 data_path = os.path.join(PATH_TO_PROJECT, 'data')
-plot_n_examples_all_classes(data_path, subset_name='training', n_examples=10)
+plot_n_examples_all_classes(data_path, subset_name='training', n_examples=5)
 
