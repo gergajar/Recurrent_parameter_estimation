@@ -158,14 +158,16 @@ class SequenceGenerator(object):
                 noise_list.append(noise_within_sequence)
             #check values not above 1.0
             if (samples>1.0).any():
-                print(samples[samples>1.0])
                 samples[samples > 1.0] = 1.0
+                """
+                print(samples[samples>1.0])
                 print('A noisy generated samples is above 1.0, and generator'
                                  +' only support values less than 1.0, Re-adjust'
                                   +' your generation parameters to avoid this')
                 #raise ValueError('A noisy generated samples is above 1.0, and generator'
                 #                 +' only support values less than 1.0, Re-adjust'
                 #                  +' your generation parameters to avoid this')
+                """
             sequence_list.append(samples)
             time_list.append(time)
             params_list.append(params)
