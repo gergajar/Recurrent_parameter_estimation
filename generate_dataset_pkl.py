@@ -38,7 +38,7 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [0.8, 0.8]
+        amp_range = [1, 1] #[0.6, 0.8]
         #period_range = [np.pi/2, np.pi/2]
         #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
         periods_range = [3/4, 3]
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         noise_distr = "gaussian"
         mean_noise = [0.01, 0.2]
         dev_mean = 0.01
-        amp_noise = 0.1
+        amp_noise = 0.0
         phase_noise = 0#2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
@@ -64,7 +64,7 @@ if __name__ == "__main__":
                               amp_noise=amp_noise,
                               phase_noise=phase_noise)
 
-        n_examples = 37500#100#100000#37500
+        n_examples = 100#37500#100#100000#37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
