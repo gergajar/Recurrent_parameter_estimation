@@ -132,6 +132,8 @@ if __name__ == "__main__":
             sets[set_idx][k] = [d[k] for d in set_dict]
 
     pickle.dump([train, val, test], open(os.path.join(data_path, 'data_set.pkl'), "wb"), protocol=2)
+    pickle.dump([train, val, test], open(os.path.join(PATH_TO_PROJECT, '..', 'harvardgan', 'TOY' 'toy.pkl'), "wb"),
+                protocol=2)
     print('train shape %s' % str(np.array(train['original_magnitude']).shape))
     print('val shape %s' % str(np.array(val['original_magnitude']).shape))
     print('test shape %s' % str(np.array(test['original_magnitude']).shape))
