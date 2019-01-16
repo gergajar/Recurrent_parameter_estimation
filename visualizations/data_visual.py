@@ -9,7 +9,7 @@ PATH_TO_PROJECT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(PATH_TO_PROJECT)
 
-def plot_n_examples(data_path, subset_name="training", n_examples=3):
+def plot_n_examples(data_path, subset_name="training", n_examples=3, plot_freq_hist=True):
 
     data = np.load(data_path)
     subset = data[subset_name]
@@ -32,6 +32,21 @@ def plot_n_examples(data_path, subset_name="training", n_examples=3):
         #plt.savefig("./plots/" + subset_name + "_" + self.seq_shape +
         #            "_" + self.noise_distr + "_sample" + str(i).zfill(3) + ".png")
         plt.show()
+    if plot_freq_hist:
+        a = []
+        for i in range(subset['n_sequences']):
+            a.append(subset["params"][i][1])
+        plt.hist(a)
+        plt.title('freq')
+        plt.show()
+
+        a = []
+        for i in range(subset['n_sequences']):
+            a.append(1/subset["params"][i][1])
+        plt.hist(a)
+        plt.title('period')
+        plt.show()
+
 
 def plot_n_examples_all_classes(data_path, subset_name="training", n_examples=3):
     filenames = [f for f in listdir(data_path) if isfile(join(data_path, f))]

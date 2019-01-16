@@ -119,11 +119,25 @@ class SequenceGenerator(object):
                                     high=self.amp_range[1])
             #d noise of giorgia
             amp -= np.abs(np.random.normal(loc=0, scale=self.amp_noise))
+
+
+            if self.freq_range is not None:
+                period_range = (1 / self.freq_range)[::-1]
+                period = np.random.uniform(low=period_range[0],
+                                         high=period_range[1])
+                freq = 1/period
+            else:
+                periods = (1 / self.freqs)[::-1]
+                period = np.random.choice(periods)
+                freq = 1/period
+
+            """
             if self.freq_range is not None:
                 freq = np.random.uniform(low=self.freq_range[0],
                                          high=self.freq_range[1])
             else:
                 freq = np.random.choice(self.freqs)
+            """
             #No random phase
             phase = np.random.uniform(low=0, high=self.phase_noise)
             #phase = 0
