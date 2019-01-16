@@ -52,14 +52,17 @@ class SequenceGenerator(object):
 
         if self.seq_shape == "constant":
             self.amp_range = kwargs["amp_range"]
+            self.amps = kwargs["amps"]
         elif self.seq_shape in ["sinusoidal", "square", "sawtooth"]:
             self.freq_range = kwargs["freq_range"]
             self.freqs = kwargs["freqs"]
             self.amp_range = kwargs["amp_range"]
+            self.amps = kwargs["amps"]
         elif self.seq_shape == "gaussian_pulses":
             self.freqs = kwargs["freqs"]
             self.freq_range = kwargs["freq_range"]
             self.amp_range = kwargs["amp_range"]
+            self.amps = kwargs["amps"]
             self.pulse_width_range = kwargs["pulse_width_range"]
 
     def set_noise_params(self, **kwargs):
@@ -115,8 +118,14 @@ class SequenceGenerator(object):
             samples_within_sequence = np.random.uniform(low=self.min_length,
                                                         high=self.max_length+1)
             last_sample_time = np.random.uniform(low=self.time_span[0]+self.min_time_spam, high=self.time_span[1])
-            amp = np.random.uniform(low=self.amp_range[0],
-                                    high=self.amp_range[1])
+
+            if self.amp_range is not None:
+                amp = np.random.uniform(low=self.amp_range[0],
+                                        high=self.amp_range[1])
+            else:
+                amp = np.random.choice(self.amps)
+            #amp = np.random.uniform(low=self.amp_range[0],
+            #                        high=self.amp_range[1])
             #d noise of giorgia
             amp -= np.abs(np.random.normal(loc=0, scale=self.amp_noise))
 
