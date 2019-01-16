@@ -47,6 +47,13 @@ def plot_n_examples(data_path, subset_name="training", n_examples=3, plot_freq_h
         plt.title('period')
         plt.show()
 
+        a=[]
+        for i in range(subset['n_sequences']):
+            a.append(subset["params"][i][0])
+        plt.hist(a)
+        plt.title('amplitude')
+        plt.show()
+
 
 def plot_n_examples_all_classes(data_path, subset_name="training", n_examples=3):
     filenames = [f for f in listdir(data_path) if isfile(join(data_path, f))]
