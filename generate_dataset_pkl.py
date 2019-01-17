@@ -38,7 +38,7 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [0.4,0.9]#[0.4, 1] #[0.6, 0.8]
+        amp_range = [0.25,0.75]#[0.4, 1] #[0.6, 0.8]
         amps = None#np.linspace(start=0.4, stop=0.9, num=3)
         #period_range = [np.pi/2, np.pi/2]
         #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         # Noise
         heteroskedastic = True
         noise_distr = "gaussian"
-        mean_noise = [0.01, 0.2]
+        mean_noise = [0.01, 0.15]
         dev_mean = 0.01
         amp_noise = 0.0
         phase_noise = 0#2*np.pi
