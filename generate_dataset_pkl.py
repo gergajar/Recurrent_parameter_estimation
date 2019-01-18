@@ -38,8 +38,8 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = None#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
-        amps = np.linspace(start=0.4, stop=0.9, num=3)#None#
+        amp_range = [0.4, 0.9]#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
+        amps = None#np.linspace(start=0.4, stop=0.9, num=3)#None#
         #period_range = [np.pi/2, np.pi/2]
         #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
         periods_range = [3,3]#[3/4, 3]#[3,3]#[3/4, 3]
