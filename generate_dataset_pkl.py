@@ -38,11 +38,11 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = [0.25,0.75]#None#[0.4, 0.9]#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
+        amp_range = [0.25, 0.75]#None#[0.4, 0.9]#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
         amps = None#np.linspace(start=0.25, stop=0.75, num=3)#None#
         #period_range = [np.pi/2, np.pi/2]
         #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
-        periods_range = [3,3]#[3/4, 3]#[3,3]#[3/4, 3]
+        periods_range = [3/4, 3]#[3,3]#[3/4, 3]
         freq_range = 1/np.array(periods_range)[::-1]#np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
         freqs = None#1/np.array(periods)#(2 * np.pi)/np.array(periods)
 
