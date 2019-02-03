@@ -66,7 +66,7 @@ if __name__ == "__main__":
                               amp_noise=amp_noise,
                               phase_noise=phase_noise)
 
-        n_examples = 100#100000#37500
+        n_examples = 37500#100000#37500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
