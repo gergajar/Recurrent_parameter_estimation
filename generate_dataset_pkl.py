@@ -11,7 +11,7 @@ from os import listdir
 from os.path import isfile, join
 
 if __name__ == "__main__":
-    #delete current pkls
+    # delete current pkls
     data_path = os.path.join(PATH_TO_PROJECT, 'data')
     filenames = [f for f in listdir(data_path) if isfile(join(data_path, f))]
     pkl_filenames = [s for s in filenames if '.pkl' in s]
@@ -20,16 +20,16 @@ if __name__ == "__main__":
         if os.path.isfile(path_to_file):
             os.remove(path_to_file)
 
-    shapes = ["square", "sawtooth", "sinusoidal"]#["sinusoidal"]#
+    shapes = ["square", "sawtooth", "sinusoidal", "gaussian_pulses"]  # ["sinusoidal"]#
+    # shapes = ["sinusoidal"]
     for shape in shapes:
-
         data = SequenceGenerator(sequence_shape=shape)
         # Cadence
-        time_sample_noise = 0.0
-        max_length = 100#50
-        min_length = 100#20
-        time_span = [0,3]#[10, 50]
-        min_time_spam = 3#10
+        time_sample_noise = 0.1
+        max_length = 100  # 50
+        min_length = 100  # 20
+        time_span = [0, 1]  # [10, 50]
+        min_time_spam = 1  # 10
 
         data.set_cadence_params(time_sample_noise=time_sample_noise,
                                 max_length=max_length,
@@ -38,18 +38,23 @@ if __name__ == "__main__":
                                 min_time_spam=min_time_spam)
 
         # Signal
-        amp_range = None#[0.25, 0.75]#None#[0.4, 0.9]#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
-        amps = np.linspace(start=0.25, stop=0.75, num=3)#None#
-        #period_range = [np.pi/2, np.pi/2]
-        #periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
-        periods_range = [3/2,3/2]#[3/4, 3]#[3,3]#[3/4, 3]
-        freq_range = 1/np.array(periods_range)[::-1]#np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
-        freqs = None#1/np.array(periods)#(2 * np.pi)/np.array(periods)
+        amp_range = np.linspace(start=0.25, stop=1, num=4)   # [0.25, 0.75]#None#[0.4, 0.9]#[0.25,0.75]#[0.4, 0.9] #[0.6, 0.9]
+        amps = np.linspace(start=0.25, stop=1, num=4)  # None#
+        # period_range = [np.pi/2, np.pi/2]
+        # periods = np.linspace(start=3/4, stop=3, num=8)#np.linspace(start=np.pi/2, stop=2*np.pi, num=4) #[3/4]
+        # periods_range = [3 / 2, 3 / 2]  # [3/4, 3]#[3,3]#[3/4, 3]
+        periods_range = [1, 1]  # [3/4, 3]#[3,3]#[3/4, 3]
+        freq_range = 1 / np.array(periods_range)[::-1]  # np.array(period_range)/(2*np.pi)#freq_range = [0.3, 0.05]
+        # freqs = None  # 1/np.array(periods)#(2 * np.pi)/np.array(periods)
+        freqs = freq_range  # 1/np.array(periods)#(2 * np.pi)/np.array(periods)
+
+        pulse_width_range = [0.1, 0.3]
 
         data.set_signal_params(amp_range=amp_range,
                                amps=amps,
-                               freqs = freqs,
-                               freq_range=freq_range)
+                               freqs=freqs,
+                               freq_range=freq_range,
+                               pulse_width_range=pulse_width_range)
 
         # Noise
         heteroskedastic = True
@@ -57,7 +62,7 @@ if __name__ == "__main__":
         mean_noise = [0.01, 0.15]
         dev_mean = 0.01
         amp_noise = 0.0
-        phase_noise = 0#2*np.pi
+        phase_noise = 2*np.pi  # 2*np.pi
 
         data.set_noise_params(heteroskedastic=heteroskedastic,
                               noise_distr=noise_distr,
@@ -66,16 +71,18 @@ if __name__ == "__main__":
                               amp_noise=amp_noise,
                               phase_noise=phase_noise)
 
-        n_examples = 37500#100000#37500
+        # n_examples = 37500  # 100000#37500
+        n_examples = 500
         set_prop = 0.8, 0.1, 0.1
 
         data.generate_dataset(set_prop=set_prop,
                               n_sequences=n_examples,
                               data_name=shape)
 
-        #data.plot_n_examples()
+        # data.plot_n_examples()
 
-    #SCRIPT2 sequences to dicts
+
+    # SCRIPT2 sequences to dicts
     # kwargs["amp"], kwargs["freq"], kwargs["phase"]
     def set_to_dicts_list(data, time_series_class, set):
         data = data[set]
@@ -102,10 +109,10 @@ if __name__ == "__main__":
         filenames = [f for f in listdir(data_path) if isfile(join(data_path, f))]
         time_series_filename = [s for s in filenames if shape in s][0]
         time_series_path = os.path.join(data_path, time_series_filename)
-        data = np.load(time_series_path)
-        train_set += set_to_dicts_list(data, shape, set='training')
-        val_set += set_to_dicts_list(data, shape, set='validation')
-        test_set += set_to_dicts_list(data, shape, set='testing')
+        data_np = np.load(time_series_path)
+        train_set += set_to_dicts_list(data_np, shape, set='training')
+        val_set += set_to_dicts_list(data_np, shape, set='validation')
+        test_set += set_to_dicts_list(data_np, shape, set='testing')
 
     pickle.dump(train_set, open(os.path.join(data_path, 'training.pkl'), "wb"), protocol=2)
     pickle.dump(val_set, open(os.path.join(data_path, 'validation.pkl'), "wb"), protocol=2)
@@ -117,7 +124,7 @@ if __name__ == "__main__":
     del val_set
     del test_set
 
-    #SCRIPT3 concatenate dicts
+    # SCRIPT3 concatenate dicts
     data_path = os.path.join(PATH_TO_PROJECT, 'data')
     # pickle.dump([train_set, val_set, test_set], open(os.path.join(data_path, 'data_set_dicts.pkl'), "wb"), protocol=2)
     dataset = np.load(os.path.join(data_path, 'data_set_dicts.pkl'))
@@ -133,8 +140,10 @@ if __name__ == "__main__":
         for k in set_dict[0].keys():
             sets[set_idx][k] = [d[k] for d in set_dict]
 
-    pickle.dump([train, val, test], open(os.path.join(data_path, 'data_set.pkl'), "wb"))
-    pickle.dump([train, val, test], open(os.path.join(PATH_TO_PROJECT, '..', 'harvardgan', 'TOY', 'toy.pkl'), "wb"))
-    print('train shape %s' % str(np.array(train['original_magnitude']).shape))
-    print('val shape %s' % str(np.array(val['original_magnitude']).shape))
-    print('test shape %s' % str(np.array(test['original_magnitude']).shape))
+    # pickle.dump([train, val, test], open(os.path.join(data_path, 'data_set.pkl'), "wb"))
+    # pickle.dump([train, val, test], open(os.path.join(PATH_TO_PROJECT, '..', 'harvardgan', 'TOY', 'toy.pkl'), "wb"))
+    # print('train shape %s' % str(np.array(train['original_magnitude']).shape))
+    # print('val shape %s' % str(np.array(val['original_magnitude']).shape))
+    # print('test shape %s' % str(np.array(test['original_magnitude']).shape))
+
+    data.plot_n_examples(n_examples=10)
